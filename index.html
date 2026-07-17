@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="校园流感传播与防控措施交互式示范" />
+    <title>校园流感态势演练</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#simulation">跳到模拟画面</a>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div><p>公共卫生示范</p><h1>校园流感态势演练</h1></div>
+      </div>
+      <div class="readout"><button class="source-button" id="source-button" type="button">模型依据</button><span class="live-dot" aria-hidden="true"></span><span id="status-text">模拟已就绪</span><time id="clock">DAY 01 · 08:00</time></div>
+    </header>
+    <main class="app-shell">
+      <aside class="context-panel" aria-label="状态说明">
+        <section><p class="eyebrow">场景 / 晨间到校</p><h2 id="risk-label">风险评估中</h2><p id="risk-summary">调节条件，观察校园传播轨迹。</p></section>
+        <section class="legend-section">
+          <h3>人员状态</h3>
+          <ul class="legend">
+            <li><span class="legend-dot susceptible"></span>易感</li><li><span class="legend-dot exposed"></span>潜伏</li><li><span class="legend-dot symptomatic"></span>出现症状</li><li><span class="legend-dot recovered"></span>恢复</li><li><span class="legend-dot protected"></span>接种/强免疫</li><li><span class="legend-dot severe"></span>重症</li>
+          </ul>
+        </section>
+        <section class="briefing"><h3>读图重点</h3><p>近距离接触形成的虚线代表可能的暴露路径。模拟用于理解相对风险，不用于真实病例预测。</p></section>
+        <section class="recommendation" aria-live="polite"><p class="eyebrow">当前优先措施</p><strong id="recommendation-title">保持通风并佩戴口罩</strong><p id="recommendation-detail">优先降低密集室内近距离接触。</p></section>
+      </aside>
+      <section class="simulation-area" id="simulation" aria-label="校园传播模拟画面">
+        <div class="simulation-toolbar">
+          <div><p class="eyebrow">实时鸟瞰</p><h2>校园平面 / <span id="population-label">84</span> 人</h2></div>
+          <div class="toolbar-actions">
+            <button class="icon-button" id="view-reset-button" type="button" aria-label="回到地图中心" title="回到地图中心"><span aria-hidden="true">⌖</span></button>
+            <button class="icon-button" id="reset-button" type="button" aria-label="重置模拟" title="重置模拟"><span aria-hidden="true">↺</span></button>
+            <button class="step-button" id="step-button" type="button">+1 分钟</button>
+            <label class="select-control">步长<select id="time-step" aria-label="单次模拟步长"><option value="1">1 分钟</option><option value="5">5 分钟</option><option value="15">15 分钟</option></select></label>
+            <label class="select-control">速度<select id="simulation-speed" aria-label="演练速度"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+            <button class="run-button" id="run-button" type="button"><span class="run-icon" aria-hidden="true">▶</span><span id="run-label">开始演练</span></button>
+          </div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="campus-canvas" aria-label="校园内人员流动与流感传播模拟"></canvas>
+          <div class="map-label label-classroom">教学楼 A</div><div class="map-label label-library">图书馆</div><div class="map-label label-canteen">食堂</div><div class="map-label label-field">操场</div>
+          <div class="canvas-caption" id="canvas-caption">等待演练开始</div>
+          <div class="map-menu" id="map-menu" hidden></div>
+        </div>
+        <div class="metrics" aria-label="实时指标">
+          <div><span>易感</span><strong id="metric-susceptible">0</strong></div><div><span>潜伏</span><strong id="metric-exposed">0</strong></div><div><span>症状</span><strong id="metric-symptomatic">0</strong></div><div><span>已恢复</span><strong id="metric-recovered">0</strong></div><div><span>重症</span><strong id="metric-severe">0</strong></div><div class="metric-r"><span>相对传播压力</span><strong id="metric-r">0.0</strong></div>
+        </div>
+      </section>
+      <aside class="control-panel" aria-label="传播条件控制">
+        <div class="controls-heading"><p class="eyebrow">条件台</p><h2>传播变量</h2></div>
+        <div class="control-group"><label for="campus-mode">教育场景</label><select id="campus-mode"><option value="kindergarten">幼儿园</option><option value="primary">小学</option><option value="highSchool" selected>中学</option><option value="university">大学</option></select><p id="campus-mode-note" class="control-note"></p></div>
+        <div class="control-group"><label for="strain">流感毒株</label><select id="strain"><option value="seasonal">季节性株 · 平衡</option><option value="fast">高传播株 · 症状隐匿</option><option value="severe">高症状株 · 易识别</option><option value="surge">复合高风险株 · 演示用</option></select><p id="strain-note" class="control-note"></p></div>
+        <fieldset class="control-group range-fields"><legend>环境与人群</legend>
+          <div class="range-row"><label for="temperature">室温 <output id="temperature-value">20°C</output></label><input id="temperature" type="range" min="8" max="32" value="20" /></div>
+          <div class="range-row"><label for="class-size">班级人数 <output id="class-size-value">42 人</output></label><input id="class-size" type="range" min="20" max="60" value="42" step="2" /></div>
+          <div class="range-row"><label for="population">校园总人数 <output id="population-value">84 人</output></label><input id="population" type="range" min="40" max="2400" value="84" step="4" /></div>
+          <div class="range-row"><label for="density">空间密集度 <output id="density-value">中等</output></label><input id="density" type="range" min="1" max="5" value="3" /></div>
+          <div class="range-row"><label for="ventilation">通风换气 <output id="ventilation-value">良好</output></label><input id="ventilation" type="range" min="1" max="5" value="4" /></div>
+          <div class="range-row"><label for="hygiene">卫生状态 <output id="hygiene-value">良好</output></label><input id="hygiene" type="range" min="1" max="5" value="4" /></div>
+        </fieldset>
+        <fieldset class="control-group range-fields"><legend>防控响应</legend>
+          <div class="range-row"><label for="vaccination-coverage">季前接种覆盖 <output id="vaccination-coverage-value">45%</output></label><input id="vaccination-coverage" type="range" min="0" max="100" value="45" step="5" /></div>
+          <div class="range-row"><label for="vaccine-effectiveness">本季预期保护 <output id="vaccine-effectiveness-value">50%</output></label><input id="vaccine-effectiveness" type="range" min="0" max="80" value="50" step="5" /></div>
+          <div class="range-row"><label for="mask">口罩覆盖 <output id="mask-value">60%</output></label><input id="mask" type="range" min="0" max="100" value="60" step="5" /></div>
+          <div class="range-row"><label for="isolation">症状隔离 <output id="isolation-value">70%</output></label><input id="isolation" type="range" min="0" max="100" value="70" step="5" /></div>
+          <div class="range-row"><label for="attention">响应重视度 <output id="attention-value">积极</output></label><input id="attention" type="range" min="1" max="5" value="4" /></div>
+          <label for="policy">校园接触措施</label><select id="policy"><option value="normal">正常教学</option><option value="staggered">错峰与活动限流</option><option value="remote">暂停线下聚集活动</option></select><p id="policy-note" class="control-note"></p>
+        </fieldset>
+        <div class="scenario-actions"><p class="eyebrow">教育场景预设</p><div><button type="button" data-scenario="kindergarten">幼儿园</button><button type="button" data-scenario="primary">小学</button><button type="button" data-scenario="secondary">中学</button><button type="button" data-scenario="universityPressure">大学高密度</button><button type="button" data-scenario="outbreak">出现聚集病例</button><button type="button" data-scenario="intervention">科学干预</button></div></div>
+      </aside>
+    </main>
+    <footer><span>交互式教学示范</span><span>参数为概念化相对关系，不代表流行病学预测模型</span></footer>
+    <dialog id="evidence-dialog" class="evidence-dialog" aria-labelledby="evidence-title">
+      <div class="dialog-heading"><div><p class="eyebrow">参数边界与文献</p><h2 id="evidence-title">模型依据</h2></div><button class="icon-button" id="close-evidence" type="button" aria-label="关闭模型依据" title="关闭">×</button></div>
+      <p>模型采用随机个体接触演示，而非病例预测工具。历史研究中的数值仅作为校园情景校准点，不外推为普适风险。</p>
+      <ol class="source-list">
+        <li><a href="https://www.zggrkz.com/zggrkzzzen/article/abstract/1671-9638201602-0079-04" target="_blank" rel="noreferrer">关鹏等，2016</a>：高校 H1N1 元胞自动机研究。以近距离有效感染发病率 0.04、R0 1.202 作为历史校准参考。</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/20209058/" target="_blank" rel="noreferrer">Nichol et al., 2010</a>：封闭大学校园 SIR 模型，比较季前/流行季接种和假期或停课对传播的影响。</li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7099900/" target="_blank" rel="noreferrer">A simulation model for policy decision analysis, 2020</a>：大学校园 SEIR 政策模型，讨论社交距离、隔离、暂停线下活动和宿舍疏散。</li>
+        <li><a href="https://www.chinacdc.cn/jkyj/crb2/bl/lxxgm/jswj_lg/202511/t20251103_313229.html" target="_blank" rel="noreferrer">中国疾控中心，2025-2026</a>：建议无禁忌的 6 月龄及以上人群接种；中小学校为重点场所，接种后通常 2-4 周形成保护性抗体。</li>
+      </ol>
+      <p class="evidence-note">“本季预期保护”保留为可调教学假设，因保护效果随流行季、疫苗匹配度与人群而变化。季中接种不在本演练中即时生效。</p>
+    </dialog>
+    <script src="./app.js"></script>
+  </body>
+</html>

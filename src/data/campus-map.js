@@ -1,0 +1,198 @@
+export const BUILDINGS = [
+  {
+    id: "academic",
+    label: "教学楼 A",
+    kind: "indoor",
+    floors: 3,
+    shapes: [
+      { type: "rect", x: 0.08, y: 0.12, width: 0.39, height: 0.28 },
+      { type: "rect", x: 0.38, y: 0.24, width: 0.15, height: 0.16 },
+      { type: "circle", x: 0.44, y: 0.18, radius: 0.06 },
+    ],
+    bounds: { x: 0.08, y: 0.12, width: 0.45, height: 0.31 },
+  },
+  {
+    id: "library",
+    label: "图书馆",
+    kind: "indoor",
+    floors: 2,
+    shapes: [
+      { type: "rect", x: 0.61, y: 0.12, width: 0.28, height: 0.25 },
+      { type: "circle", x: 0.87, y: 0.19, radius: 0.06 },
+    ],
+    bounds: { x: 0.61, y: 0.12, width: 0.32, height: 0.27 },
+  },
+  {
+    id: "dining",
+    label: "食堂",
+    kind: "indoor",
+    floors: 2,
+    shapes: [
+      { type: "rect", x: 0.08, y: 0.57, width: 0.32, height: 0.23 },
+      { type: "circle", x: 0.35, y: 0.72, radius: 0.08 },
+    ],
+    bounds: { x: 0.08, y: 0.57, width: 0.36, height: 0.27 },
+  },
+  {
+    id: "dorm",
+    label: "宿舍组团",
+    kind: "indoor",
+    floors: 5,
+    shapes: [
+      { type: "rect", x: 0.52, y: 0.53, width: 0.14, height: 0.28 },
+      { type: "rect", x: 0.68, y: 0.53, width: 0.12, height: 0.28 },
+      { type: "rect", x: 0.52, y: 0.72, width: 0.28, height: 0.09 },
+    ],
+    bounds: { x: 0.52, y: 0.53, width: 0.28, height: 0.28 },
+  },
+  {
+    id: "field",
+    label: "操场",
+    kind: "outdoor",
+    floors: 1,
+    shapes: [{ type: "circle", x: 0.85, y: 0.67, radius: 0.13 }],
+    bounds: { x: 0.72, y: 0.54, width: 0.26, height: 0.26 },
+  },
+  {
+    id: "isolation",
+    label: "隔离室",
+    kind: "indoor",
+    floors: 1,
+    shapes: [{ type: "rect", x: 0.45, y: 0.5, width: 0.08, height: 0.08 }],
+    bounds: { x: 0.45, y: 0.5, width: 0.08, height: 0.08 },
+  },
+];
+
+export const ZONES = BUILDINGS.flatMap((building) => Array.from({ length: building.floors }, (_, index) => ({
+  id: building.id + "-" + (index + 1),
+  buildingId: building.id,
+  floor: index + 1,
+  label: building.label,
+  kind: building.kind,
+  bounds: building.bounds,
+})));
+
+export const LOCATIONS = [
+  { id: "academic-1a", nodeId: "academic-1a", buildingId: "academic", floor: 1, label: "1层 101", kind: "classroom", x: 0.2, y: 0.2, capacity: 56 },
+  { id: "academic-1b", nodeId: "academic-1b", buildingId: "academic", floor: 1, label: "1层 102", kind: "classroom", x: 0.34, y: 0.2, capacity: 56 },
+  { id: "academic-2a", nodeId: "academic-2a", buildingId: "academic", floor: 2, label: "2层 201", kind: "classroom", x: 0.2, y: 0.3, capacity: 56 },
+  { id: "academic-2b", nodeId: "academic-2b", buildingId: "academic", floor: 2, label: "2层 202", kind: "classroom", x: 0.34, y: 0.3, capacity: 56 },
+  { id: "academic-3a", nodeId: "academic-3a", buildingId: "academic", floor: 3, label: "3层 301", kind: "classroom", x: 0.2, y: 0.36, capacity: 56 },
+  { id: "academic-3b", nodeId: "academic-3b", buildingId: "academic", floor: 3, label: "3层 302", kind: "classroom", x: 0.34, y: 0.36, capacity: 56 },
+  { id: "library-1", nodeId: "library-1", buildingId: "library", floor: 1, label: "图书馆阅览区", kind: "study", x: 0.73, y: 0.23, capacity: 140 },
+  { id: "library-2", nodeId: "library-2", buildingId: "library", floor: 2, label: "图书馆自习区", kind: "study", x: 0.82, y: 0.3, capacity: 110 },
+  { id: "dining-1", nodeId: "dining-1", buildingId: "dining", floor: 1, label: "食堂一层", kind: "dining", x: 0.2, y: 0.66, capacity: 180 },
+  { id: "dining-2", nodeId: "dining-2", buildingId: "dining", floor: 2, label: "食堂二层", kind: "dining", x: 0.34, y: 0.72, capacity: 140 },
+  { id: "dorm-1", nodeId: "dorm-1", buildingId: "dorm", floor: 1, label: "宿舍一层", kind: "dorm", x: 0.57, y: 0.62, capacity: 130 },
+  { id: "dorm-2", nodeId: "dorm-2", buildingId: "dorm", floor: 2, label: "宿舍二层", kind: "dorm", x: 0.72, y: 0.62, capacity: 130 },
+  { id: "dorm-3", nodeId: "dorm-3", buildingId: "dorm", floor: 3, label: "宿舍三层", kind: "dorm", x: 0.57, y: 0.75, capacity: 130 },
+  { id: "dorm-4", nodeId: "dorm-4", buildingId: "dorm", floor: 4, label: "宿舍四层", kind: "dorm", x: 0.72, y: 0.75, capacity: 130 },
+  { id: "dorm-5", nodeId: "dorm-5", buildingId: "dorm", floor: 5, label: "宿舍五层", kind: "dorm", x: 0.65, y: 0.79, capacity: 130 },
+  { id: "field-1", nodeId: "field-1", buildingId: "field", floor: 1, label: "操场", kind: "outdoor", x: 0.86, y: 0.67, capacity: 500 },
+  { id: "isolation-1", nodeId: "isolation-1", buildingId: "isolation", floor: 1, label: "隔离室", kind: "isolation", x: 0.49, y: 0.54, capacity: 80 },
+];
+
+export const NAV_NODES = [
+  { id: "quad", x: 0.5, y: 0.48, kind: "path", occupancy: "transit", laneRadius: 0.012 },
+  { id: "north-court", x: 0.5, y: 0.4, kind: "path", occupancy: "transit", laneRadius: 0.01 },
+  { id: "south-court", x: 0.5, y: 0.62, kind: "path", occupancy: "transit", laneRadius: 0.01 },
+  { id: "west-court", x: 0.42, y: 0.5, kind: "path", occupancy: "transit", laneRadius: 0.009 },
+  { id: "east-court", x: 0.64, y: 0.46, kind: "path", occupancy: "transit", laneRadius: 0.009 },
+  { id: "academic-entry", x: 0.42, y: 0.42, kind: "path", occupancy: "transit", laneRadius: 0.008 },
+  { id: "academic-stair-1", x: 0.43, y: 0.31, buildingId: "academic", floor: 1, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "academic-stair-2", x: 0.43, y: 0.31, buildingId: "academic", floor: 2, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "academic-stair-3", x: 0.43, y: 0.31, buildingId: "academic", floor: 3, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "library-entry", x: 0.75, y: 0.4, kind: "path", occupancy: "transit", laneRadius: 0.008 },
+  { id: "library-stair-1", x: 0.84, y: 0.3, buildingId: "library", floor: 1, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "library-stair-2", x: 0.84, y: 0.3, buildingId: "library", floor: 2, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dining-entry", x: 0.38, y: 0.56, kind: "path", occupancy: "transit", laneRadius: 0.008 },
+  { id: "dining-stair-1", x: 0.34, y: 0.7, buildingId: "dining", floor: 1, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dining-stair-2", x: 0.34, y: 0.7, buildingId: "dining", floor: 2, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-entry", x: 0.64, y: 0.52, kind: "path", occupancy: "transit", laneRadius: 0.008 },
+  { id: "isolation-entry", x: 0.49, y: 0.48, kind: "path", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-stair-1", x: 0.66, y: 0.69, buildingId: "dorm", floor: 1, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-stair-2", x: 0.66, y: 0.69, buildingId: "dorm", floor: 2, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-stair-3", x: 0.66, y: 0.69, buildingId: "dorm", floor: 3, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-stair-4", x: 0.66, y: 0.69, buildingId: "dorm", floor: 4, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  { id: "dorm-stair-5", x: 0.66, y: 0.69, buildingId: "dorm", floor: 5, kind: "stair", occupancy: "transit", laneRadius: 0.006 },
+  ...LOCATIONS.map(({ nodeId, x, y, buildingId, floor }) => ({ id: nodeId, x, y, buildingId, floor, kind: "room", occupancy: "stay" })),
+];
+
+export const NAV_EDGES = [
+  ["quad", "north-court"], ["quad", "south-court"], ["quad", "west-court"], ["quad", "east-court"],
+  ["north-court", "west-court"], ["north-court", "east-court"], ["south-court", "west-court"], ["south-court", "east-court"],
+  ["west-court", "academic-entry"], ["west-court", "dining-entry"], ["east-court", "library-entry"], ["south-court", "dorm-entry"], ["east-court", "field-1"], ["south-court", "field-1"], ["north-court", "isolation-entry"], ["isolation-entry", "isolation-1"],
+  ["academic-entry", "academic-stair-1"], ["academic-stair-1", "academic-stair-2"], ["academic-stair-2", "academic-stair-3"],
+  ["academic-stair-1", "academic-1a"], ["academic-stair-1", "academic-1b"], ["academic-stair-2", "academic-2a"], ["academic-stair-2", "academic-2b"], ["academic-stair-3", "academic-3a"], ["academic-stair-3", "academic-3b"],
+  ["library-entry", "library-stair-1"], ["library-stair-1", "library-stair-2"], ["library-stair-1", "library-1"], ["library-stair-2", "library-2"],
+  ["dining-entry", "dining-stair-1"], ["dining-stair-1", "dining-stair-2"], ["dining-stair-1", "dining-1"], ["dining-stair-2", "dining-2"],
+  ["dorm-entry", "dorm-stair-1"], ["dorm-stair-1", "dorm-stair-2"], ["dorm-stair-2", "dorm-stair-3"], ["dorm-stair-3", "dorm-stair-4"], ["dorm-stair-4", "dorm-stair-5"],
+  ["dorm-stair-1", "dorm-1"], ["dorm-stair-2", "dorm-2"], ["dorm-stair-3", "dorm-3"], ["dorm-stair-4", "dorm-4"], ["dorm-stair-5", "dorm-5"],
+];
+
+export const QUEUE_NODES = {
+  academic: "academic-entry",
+  library: "library-entry",
+  dining: "dining-entry",
+  dorm: "dorm-entry",
+  field: "field-1",
+  isolation: "isolation-entry",
+};
+
+export const CAMPUS_MODES = {
+  kindergarten: {
+    label: "幼儿园模式",
+    note: "班级规模小、活动与午休集中；口罩覆盖较低，但教师和园方响应通常更快。",
+    startMinute: 450,
+    schedule: [
+      { until: 510, label: "晨间入园", activity: "arrival", weights: { academic: 0.48, dining: 0.28, field: 0.24 } },
+      { until: 600, label: "集体活动", activity: "class", slot: "morning-1", weights: { academic: 0.82, field: 0.12, dining: 0.06 } },
+      { until: 660, label: "户外与点心", activity: "break", weights: { academic: 0.22, dining: 0.38, field: 0.4 } },
+      { until: 720, label: "午餐与午休", activity: "meal", weights: { academic: 0.38, dining: 0.56, field: 0.06 } },
+      { until: 900, label: "午后活动", activity: "class", slot: "afternoon-1", weights: { academic: 0.72, field: 0.2, dining: 0.08 } },
+      { until: 1440, label: "离园后", activity: "free", weights: { academic: 0.3, dining: 0.18, field: 0.52 } },
+    ],
+  },
+  primary: {
+    label: "小学模式",
+    note: "班级稳定、课间集中，防控执行依赖教师组织，口罩和接种覆盖均处于中等水平。",
+    startMinute: 420,
+    schedule: [
+      { until: 480, label: "晨间到校", activity: "arrival", weights: { academic: 0.6, dining: 0.25, field: 0.15 } },
+      { until: 600, label: "第一节课", activity: "class", slot: "morning-1", weights: { academic: 0.86, field: 0.08, dining: 0.06 } },
+      { until: 630, label: "课间活动", activity: "break", weights: { academic: 0.34, dining: 0.2, field: 0.36, library: 0.1 } },
+      { until: 720, label: "第二节课", activity: "class", slot: "morning-2", weights: { academic: 0.86, field: 0.08, dining: 0.06 } },
+      { until: 780, label: "午餐时段", activity: "meal", weights: { academic: 0.12, dining: 0.67, field: 0.14, library: 0.07 } },
+      { until: 900, label: "下午课程", activity: "class", slot: "afternoon-1", weights: { academic: 0.82, library: 0.08, field: 0.07, dining: 0.03 } },
+      { until: 1440, label: "课后活动", activity: "free", weights: { academic: 0.25, dining: 0.2, field: 0.4, library: 0.15 } },
+    ],
+  },
+  highSchool: {
+    label: "中学模式",
+    note: "07:00-08:00 从食堂与教学楼过渡，08:00 后以课堂聚集为主。",
+    startMinute: 420,
+    schedule: [
+      { until: 480, label: "晨间到校", activity: "arrival", weights: { academic: 0.55, dining: 0.34, field: 0.11 } },
+      { until: 600, label: "第一节课", activity: "class", slot: "morning-1", weights: { academic: 0.84, library: 0.05, field: 0.06, dining: 0.05 } },
+      { until: 630, label: "课间活动", activity: "break", weights: { academic: 0.35, dining: 0.22, field: 0.31, library: 0.12 } },
+      { until: 720, label: "第二节课", activity: "class", slot: "morning-2", weights: { academic: 0.84, library: 0.05, field: 0.06, dining: 0.05 } },
+      { until: 780, label: "午餐时段", activity: "meal", weights: { academic: 0.08, dining: 0.66, field: 0.16, library: 0.1 } },
+      { until: 900, label: "下午课程", activity: "class", slot: "afternoon-1", weights: { academic: 0.8, library: 0.09, field: 0.07, dining: 0.04 } },
+      { until: 1440, label: "课后活动", activity: "free", weights: { academic: 0.24, dining: 0.2, field: 0.38, library: 0.18 } },
+    ],
+  },
+  university: {
+    label: "大学模式",
+    note: "课程分散，食堂、教学楼、图书馆和无课学生的宿舍活动会并行发生。",
+    startMinute: 420,
+    schedule: [
+      { until: 480, label: "晨间活动", activity: "arrival", weights: { academic: 0.23, dining: 0.36, dorm: 0.27, library: 0.08, field: 0.06 } },
+      { until: 600, label: "上午课程", activity: "class", slot: "morning-1", weights: { academic: 0.46, dining: 0.12, dorm: 0.24, library: 0.13, field: 0.05 } },
+      { until: 630, label: "课间流动", activity: "break", weights: { academic: 0.24, dining: 0.17, dorm: 0.22, library: 0.16, field: 0.21 } },
+      { until: 720, label: "上午课程", activity: "class", slot: "morning-2", weights: { academic: 0.43, dining: 0.1, dorm: 0.26, library: 0.16, field: 0.05 } },
+      { until: 780, label: "午餐时段", activity: "meal", weights: { academic: 0.09, dining: 0.46, dorm: 0.24, library: 0.08, field: 0.13 } },
+      { until: 900, label: "下午课程", activity: "class", slot: "afternoon-1", weights: { academic: 0.42, dining: 0.09, dorm: 0.24, library: 0.18, field: 0.07 } },
+      { until: 1440, label: "下午与晚间", activity: "free", weights: { academic: 0.16, dining: 0.2, dorm: 0.36, library: 0.17, field: 0.11 } },
+    ],
+  },
+};
